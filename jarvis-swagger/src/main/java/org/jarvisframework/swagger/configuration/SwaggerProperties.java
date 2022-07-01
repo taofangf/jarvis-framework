@@ -30,7 +30,7 @@ import java.util.StringJoiner;
  */
 @ConfigurationProperties(prefix = "jarvis.swagger")
 @Component
-public class DocketConfig {
+public class SwaggerProperties {
     /**
      * 是否开启Swagger
      */
@@ -137,7 +137,7 @@ public class DocketConfig {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", DocketConfig.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", SwaggerProperties.class.getSimpleName() + "[", "]")
                 .add("enabled=" + enabled)
                 .add("title='" + title + "'")
                 .add("basePackage='" + basePackage + "'")

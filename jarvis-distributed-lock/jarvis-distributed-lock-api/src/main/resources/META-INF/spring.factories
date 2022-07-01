@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    org.jarvisframework.distributed.lock.api.aspect.DistributedLockAspect

@@ -32,4 +32,12 @@ public final class ResultCode {
      * 通用成功返回码信息
      */
     public static final String PUB_SUCCESS_CODE_DOC = "success";
+    /**
+     * 分布式锁异常返回码
+     */
+    public static final String DISTRIBUTED_LOCK_ERROR_CODE = "100000";
+    /**
+     * 分布式锁获取异常信息
+     */
+    public static final String DISTRIBUTED_LOCK_ERROR_CODE_DOC = "acquire distributed lock failed";
 }

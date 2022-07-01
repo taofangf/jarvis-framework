@@ -35,27 +35,27 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class Swagger3Configuration {
 
     @Bean
-    public DocketConfig docketConfig() {
-        return new DocketConfig();
+    public SwaggerProperties swaggerProperties() {
+        return new SwaggerProperties();
     }
 
     @Bean
-    public Docket createRestApi(DocketConfig config) {
+    public Docket createRestApi(SwaggerProperties swaggerProperties) {
         return new Docket(DocumentationType.OAS_30)
-                .apiInfo(apiInfo(config))
-                .enable(config.isEnabled())
+                .apiInfo(apiInfo(swaggerProperties))
+                .enable(swaggerProperties.isEnabled())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(config.getBasePackage()))
+                .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
                 .paths(PathSelectors.any())
                 .build();
     }
 
-    private ApiInfo apiInfo(DocketConfig config) {
+    private ApiInfo apiInfo(SwaggerProperties swaggerProperties) {
         return new ApiInfoBuilder()
-                .title(config.getTitle())
-                .contact(new Contact(config.getName(), config.getUrl(), config.getEmail()))
-                .version(config.getVersion())
-                .description(config.getDescription())
+                .title(swaggerProperties.getTitle())
+                .contact(new Contact(swaggerProperties.getName(), swaggerProperties.getUrl(), swaggerProperties.getEmail()))
+                .version(swaggerProperties.getVersion())
+                .description(swaggerProperties.getDescription())
                 .build();
     }
 }

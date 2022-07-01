@@ -27,6 +27,7 @@
     <modules>
         <module>jarvis-common</module>
         <module>jarvis-swagger</module>
+        <module>jarvis-distributed-lock</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -38,6 +39,8 @@
         <springfox.version>3.0.0</springfox.version>
         <knife4j.version>3.0.3</knife4j.version>
         <spring.boot.version>2.5.6</spring.boot.version>
+        <curator.version>4.2.0</curator.version>
+        <zookeeper.version>3.4.14</zookeeper.version>
 
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

@@ -15,29 +15,55 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.constant;
+package org.jarvisframework.common.exception;
 
 import org.jarvisframework.common.domain.Response;
 
 /**
- * 通用返回常量表
+ * 公用基础异常
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class ResponseConstants {
+public class BaseException extends RuntimeException {
     /**
-     * 公用返回前缀
+     * 返回码
      */
-    public static final String PUBLIC_RESPONSE_PREFIX = "PUB-";
+    private String resultCode;
 
     /**
-     * 通用成功返回对象
+     * 返回信息
      */
-    public static final Response PUB_SUCCESS = new Response(PUBLIC_RESPONSE_PREFIX + ResultCode.PUB_SUCCESS_CODE, ResultCode.PUB_SUCCESS_CODE_DOC);
+    private String resultInfo;
 
     /**
-     * 分布式锁异常
+     * 公用异常构造方法
+     *
+     * @param response {@link Response}
      */
-    public static final Response DISTRIBUTED_LOCK_ERROR = new Response(PUBLIC_RESPONSE_PREFIX + ResultCode.DISTRIBUTED_LOCK_ERROR_CODE, ResultCode.DISTRIBUTED_LOCK_ERROR_CODE_DOC);
+    public BaseException(Response response) {
+        super(response.getResultInfo());
+        this.resultCode = response.getResultCode();
+        this.resultInfo = response.getResultInfo();
+    }
+
+    /**
+     * 公用异常构造方法
+     *
+     * @param resultCode {@link #resultCode}
+     * @param resultInfo {@link #resultInfo}
+     */
+    public BaseException(String resultCode, String resultInfo) {
+        super(resultInfo);
+        this.resultCode = resultCode;
+        this.resultInfo = resultInfo;
+    }
+
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public String getResultInfo() {
+        return resultInfo;
+    }
 }

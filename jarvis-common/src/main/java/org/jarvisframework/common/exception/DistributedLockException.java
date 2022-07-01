@@ -15,29 +15,23 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.constant;
+package org.jarvisframework.common.exception;
 
 import org.jarvisframework.common.domain.Response;
 
 /**
- * 通用返回常量表
+ * 分布式锁异常
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class ResponseConstants {
-    /**
-     * 公用返回前缀
-     */
-    public static final String PUBLIC_RESPONSE_PREFIX = "PUB-";
+public class DistributedLockException extends BaseException {
 
-    /**
-     * 通用成功返回对象
-     */
-    public static final Response PUB_SUCCESS = new Response(PUBLIC_RESPONSE_PREFIX + ResultCode.PUB_SUCCESS_CODE, ResultCode.PUB_SUCCESS_CODE_DOC);
+    public DistributedLockException(Response response) {
+        super(response);
+    }
 
-    /**
-     * 分布式锁异常
-     */
-    public static final Response DISTRIBUTED_LOCK_ERROR = new Response(PUBLIC_RESPONSE_PREFIX + ResultCode.DISTRIBUTED_LOCK_ERROR_CODE, ResultCode.DISTRIBUTED_LOCK_ERROR_CODE_DOC);
+    public DistributedLockException(String resultCode, String resultInfo) {
+        super(resultCode, resultInfo);
+    }
 }

@@ -15,29 +15,36 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.constant;
+package org.jarvisframework.distributed.lock.redis.configuration;
 
-import org.jarvisframework.common.domain.Response;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.integration.redis.util.RedisLockRegistry;
+
+import javax.annotation.Resource;
 
 /**
- * 通用返回常量表
+ * redis distributed lock
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class ResponseConstants {
-    /**
-     * 公用返回前缀
-     */
-    public static final String PUBLIC_RESPONSE_PREFIX = "PUB-";
+public class RedisLockConfiguration {
 
     /**
-     * 通用成功返回对象
+     * Redis实现分布式锁注册的Key值根节点
      */
-    public static final Response PUB_SUCCESS = new Response(PUBLIC_RESPONSE_PREFIX + ResultCode.PUB_SUCCESS_CODE, ResultCode.PUB_SUCCESS_CODE_DOC);
+    public static final String REDIS_DISTRIBUTED_LOCK_REGISTRY_KEY = "redis-distributed-lock";
 
     /**
-     * 分布式锁异常
+     * TODO: 待实现Jedis RedisTemplate
      */
-    public static final Response DISTRIBUTED_LOCK_ERROR = new Response(PUBLIC_RESPONSE_PREFIX + ResultCode.DISTRIBUTED_LOCK_ERROR_CODE, ResultCode.DISTRIBUTED_LOCK_ERROR_CODE_DOC);
+    @Resource
+    RedisConnectionFactory connectionFactory;
+
+    @Bean
+    public RedisLockRegistry redisLockRegistry() {
+        return new RedisLockRegistry(connectionFactory, REDIS_DISTRIBUTED_LOCK_REGISTRY_KEY);
+    }
+
 }
