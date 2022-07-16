@@ -57,19 +57,9 @@ public class SwaggerProperties {
     private String description;
 
     /**
-     * 联系人姓名
+     * 联系人信息
      */
-    private String name;
-
-    /**
-     * 联系人地址
-     */
-    private String url;
-
-    /**
-     * 联系人邮箱
-     */
-    private String email;
+    private Contact contact;
 
     public boolean isEnabled() {
         return enabled;
@@ -111,28 +101,12 @@ public class SwaggerProperties {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public Contact getContact() {
+        return contact;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
     @Override
@@ -143,9 +117,60 @@ public class SwaggerProperties {
                 .add("basePackage='" + basePackage + "'")
                 .add("version='" + version + "'")
                 .add("description='" + description + "'")
-                .add("name='" + name + "'")
-                .add("url='" + url + "'")
-                .add("email='" + email + "'")
+                .add("contact=" + contact)
                 .toString();
+    }
+
+    /**
+     * 联系人信息
+     */
+    public static class Contact {
+        /**
+         * 联系人姓名
+         */
+        private String name;
+
+        /**
+         * 联系人地址
+         */
+        private String url;
+
+        /**
+         * 联系人邮箱
+         */
+        private String email;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        @Override
+        public String toString() {
+            return new StringJoiner(", ", Contact.class.getSimpleName() + "[", "]")
+                    .add("name='" + name + "'")
+                    .add("url='" + url + "'")
+                    .add("email='" + email + "'")
+                    .toString();
+        }
     }
 }

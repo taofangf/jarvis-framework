@@ -17,6 +17,7 @@
 
 package org.jarvisframework.swagger.configuration;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -34,12 +35,25 @@ import springfox.documentation.spring.web.plugins.Docket;
  */
 public class Swagger3Configuration {
 
+    /**
+     * Swagger 配置
+     *
+     * @return {@link SwaggerProperties}
+     */
     @Bean
+    @ConditionalOnMissingBean(SwaggerProperties.class)
     public SwaggerProperties swaggerProperties() {
         return new SwaggerProperties();
     }
 
+    /**
+     * Swagger 基础信息配置
+     *
+     * @param swaggerProperties {@link SwaggerProperties}
+     * @return {@link Docket}
+     */
     @Bean
+    @ConditionalOnMissingBean(Docket.class)
     public Docket createRestApi(SwaggerProperties swaggerProperties) {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo(swaggerProperties))
@@ -50,10 +64,17 @@ public class Swagger3Configuration {
                 .build();
     }
 
+    /**
+     * 文档相关信息配置
+     *
+     * @param swaggerProperties {@link SwaggerProperties}
+     * @return {@link ApiInfo}
+     */
     private ApiInfo apiInfo(SwaggerProperties swaggerProperties) {
         return new ApiInfoBuilder()
                 .title(swaggerProperties.getTitle())
-                .contact(new Contact(swaggerProperties.getName(), swaggerProperties.getUrl(), swaggerProperties.getEmail()))
+                .contact(new Contact(swaggerProperties.getContact().getName(),
+                        swaggerProperties.getContact().getUrl(), swaggerProperties.getContact().getEmail()))
                 .version(swaggerProperties.getVersion())
                 .description(swaggerProperties.getDescription())
                 .build();

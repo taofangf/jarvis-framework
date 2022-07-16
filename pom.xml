@@ -103,11 +103,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <compilerArgs>
-                        <compilerArg>-proc:none</compilerArg>
-                        <compilerArg>-parameters</compilerArg>
-                    </compilerArgs>
-                    <fork>true</fork>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                     <encoding>${file.encoding}</encoding>
