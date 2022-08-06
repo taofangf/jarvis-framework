@@ -15,35 +15,33 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.constant;
-
-import org.jarvisframework.common.domain.Response;
-import org.jarvisframework.common.enums.ResultCodeEnum;
+package org.jarvisframework.common.api;
 
 /**
- * 通用返回常量表
+ * 响应结果定义
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class ResponseConstants {
+public interface ResponseResult<T> {
     /**
-     * 公用返回前缀
+     * 响应码
+     *
+     * @return 响应码
      */
-    public static final String PUBLIC_RESPONSE_PREFIX = "PUB-";
+    String responseCode();
 
     /**
-     * 通用成功返回对象
+     * 响应消息
+     *
+     * @return 响应消息
      */
-    public static final Response PUB_SUCCESS = new Response(PUBLIC_RESPONSE_PREFIX + ResultCodeEnum.PUB_SUCCESS.getResultCode(), ResultCodeEnum.PUB_SUCCESS.getResultInfo());
+    String responseMessage();
 
     /**
-     * 通用失败返回对象
+     * 响应内容
+     *
+     * @return T
      */
-    public static final Response PUB_ERROR = new Response(PUBLIC_RESPONSE_PREFIX + ResultCodeEnum.PUB_ERROR.getResultCode(), ResultCodeEnum.PUB_ERROR.getResultInfo());
-
-    /**
-     * 分布式锁异常
-     */
-    public static final Response DISTRIBUTED_LOCK_ERROR = new Response(ResultCodeEnum.DISTRIBUTED_LOCK_ERROR_CODE.getResultCode(), ResultCodeEnum.DISTRIBUTED_LOCK_ERROR_CODE.getResultInfo());
+    T responseBody();
 }

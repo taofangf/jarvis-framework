@@ -15,17 +15,28 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.domain;
-
-import java.util.StringJoiner;
+package org.jarvisframework.common.enums;
 
 /**
- * 返回信息
+ * 返回码枚举类
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class Response {
+public enum ResultCodeEnum {
+    /**
+     * 通用成功返回码
+     */
+    PUB_SUCCESS("000000", "success"),
+    /**
+     * 通用失败返回码
+     */
+    PUB_ERROR("500000", "error"),
+    /**
+     * 分布式锁获取异常信息
+     */
+    DISTRIBUTED_LOCK_ERROR_CODE("100000", "acquire distributed lock failed");
+
     /**
      * 返回码
      */
@@ -36,10 +47,7 @@ public class Response {
      */
     private String resultInfo;
 
-    public Response() {
-    }
-
-    public Response(String resultCode, String resultInfo) {
+    ResultCodeEnum(String resultCode, String resultInfo) {
         this.resultCode = resultCode;
         this.resultInfo = resultInfo;
     }
@@ -48,25 +56,7 @@ public class Response {
         return resultCode;
     }
 
-    public Response setResultCode(String resultCode) {
-        this.resultCode = resultCode;
-        return this;
-    }
-
     public String getResultInfo() {
         return resultInfo;
-    }
-
-    public Response setResultInfo(String resultInfo) {
-        this.resultInfo = resultInfo;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", Response.class.getSimpleName() + "[", "]")
-                .add("resultCode='" + resultCode + "'")
-                .add("resultInfo='" + resultInfo + "'")
-                .toString();
     }
 }

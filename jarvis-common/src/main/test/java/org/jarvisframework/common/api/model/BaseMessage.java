@@ -15,58 +15,50 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.domain;
+package org.jarvisframework.common.api.model;
 
 import java.util.StringJoiner;
 
 /**
- * 返回信息
+ * 基础消息
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class Response {
+public class BaseMessage<T> {
     /**
-     * 返回码
+     * 消息头
      */
-    private String resultCode;
+    private MessageHead messageHead;
 
     /**
-     * 返回信息
+     * 消息Body
      */
-    private String resultInfo;
+    private T messageBody;
 
-    public Response() {
+    public MessageHead getMessageHead() {
+        return messageHead;
     }
 
-    public Response(String resultCode, String resultInfo) {
-        this.resultCode = resultCode;
-        this.resultInfo = resultInfo;
-    }
-
-    public String getResultCode() {
-        return resultCode;
-    }
-
-    public Response setResultCode(String resultCode) {
-        this.resultCode = resultCode;
+    public BaseMessage<T> setMessageHead(MessageHead messageHead) {
+        this.messageHead = messageHead;
         return this;
     }
 
-    public String getResultInfo() {
-        return resultInfo;
+    public T getMessageBody() {
+        return messageBody;
     }
 
-    public Response setResultInfo(String resultInfo) {
-        this.resultInfo = resultInfo;
+    public BaseMessage<T> setMessageBody(T messageBody) {
+        this.messageBody = messageBody;
         return this;
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Response.class.getSimpleName() + "[", "]")
-                .add("resultCode='" + resultCode + "'")
-                .add("resultInfo='" + resultInfo + "'")
+        return new StringJoiner(", ", BaseMessage.class.getSimpleName() + "[", "]")
+                .add("messageHead=" + messageHead)
+                .add("messageBody=" + messageBody)
                 .toString();
     }
 }

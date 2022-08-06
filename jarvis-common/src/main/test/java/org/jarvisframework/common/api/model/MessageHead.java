@@ -15,29 +15,50 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.constant;
+package org.jarvisframework.common.api.model;
+
+import java.util.StringJoiner;
 
 /**
- * 返回码常量定义
+ * 消息头
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public final class ResultCode {
+public class MessageHead {
     /**
-     * 通用成功返回码
+     * 请求时间
      */
-    public static final String PUB_SUCCESS_CODE = "000000";
+    private String requestTime;
+
     /**
-     * 通用成功返回码信息
+     * 请求token
      */
-    public static final String PUB_SUCCESS_CODE_DOC = "success";
-    /**
-     * 分布式锁异常返回码
-     */
-    public static final String DISTRIBUTED_LOCK_ERROR_CODE = "100000";
-    /**
-     * 分布式锁获取异常信息
-     */
-    public static final String DISTRIBUTED_LOCK_ERROR_CODE_DOC = "acquire distributed lock failed";
+    private String accessToken;
+
+    public String getRequestTime() {
+        return requestTime;
+    }
+
+    public MessageHead setRequestTime(String requestTime) {
+        this.requestTime = requestTime;
+        return this;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public MessageHead setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", MessageHead.class.getSimpleName() + "[", "]")
+                .add("requestTime='" + requestTime + "'")
+                .add("accessToken='" + accessToken + "'")
+                .toString();
+    }
 }
