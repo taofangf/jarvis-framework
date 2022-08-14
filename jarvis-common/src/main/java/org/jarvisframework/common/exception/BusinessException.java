@@ -20,19 +20,19 @@ package org.jarvisframework.common.exception;
 import org.jarvisframework.common.domain.Response;
 
 /**
- * 分布式锁异常
+ * 业务异常
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class DistributedLockException extends BaseException {
-    
+public class BusinessException extends BaseException {
+
     /**
      * 公用异常构造方法
      *
      * @param response {@link Response}
      */
-    public DistributedLockException(Response response) {
+    public BusinessException(Response response) {
         super(response);
     }
 
@@ -42,7 +42,7 @@ public class DistributedLockException extends BaseException {
      * @param resultCode 返回码
      * @param resultInfo 返回信息
      */
-    public DistributedLockException(String resultCode, String resultInfo) {
+    public BusinessException(String resultCode, String resultInfo) {
         super(resultCode, resultInfo);
     }
 }

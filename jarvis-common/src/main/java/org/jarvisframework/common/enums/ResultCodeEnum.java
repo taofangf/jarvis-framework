@@ -33,9 +33,14 @@ public enum ResultCodeEnum {
      */
     PUB_ERROR("500000", "error"),
     /**
+     * 系统异常
+     */
+    SYSTEM_EXCEPTION("500001", "System Error"),
+    /**
      * 分布式锁获取异常信息
      */
-    DISTRIBUTED_LOCK_ERROR_CODE("100000", "acquire distributed lock failed");
+    DISTRIBUTED_LOCK_ERROR_CODE("500002", "acquire distributed lock failed."),
+    ;
 
     /**
      * 返回码

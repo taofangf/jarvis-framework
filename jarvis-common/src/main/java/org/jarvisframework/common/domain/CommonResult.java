@@ -19,6 +19,7 @@ package org.jarvisframework.common.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import org.jarvisframework.common.constant.ResponseConstants;
+import org.jarvisframework.common.enums.ResultCodeEnum;
 import org.jarvisframework.common.exception.BaseException;
 
 import java.util.StringJoiner;
@@ -128,6 +129,16 @@ public class CommonResult<T> extends Response {
      */
     public static <T> CommonResult<T> ofFail(Response response, T data) {
         return new CommonResult(response, data, false);
+    }
+
+    /**
+     * 失败响应
+     *
+     * @param resultCodeEnum {@link ResultCodeEnum}
+     * @return {@link CommonResult}
+     */
+    public static CommonResult ofFail(ResultCodeEnum resultCodeEnum) {
+        return new CommonResult(resultCodeEnum.getResultCode(), resultCodeEnum.getResultInfo(), null, false);
     }
 
     /**

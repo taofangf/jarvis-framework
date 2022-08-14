@@ -17,6 +17,7 @@
 
 package org.jarvisframework.common.domain;
 
+import java.io.Serializable;
 import java.util.StringJoiner;
 
 /**
@@ -25,7 +26,9 @@ import java.util.StringJoiner;
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class Response {
+public class Response implements Serializable {
+
+    private static final long serialVersionUID = -2477352648549065232L;
     /**
      * 返回码
      */

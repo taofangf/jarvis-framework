@@ -68,16 +68,31 @@ public class StandardResponseResult<T> implements ResponseResult {
         return this;
     }
 
+    /**
+     * 响应码
+     *
+     * @return 响应码
+     */
     @Override
     public String responseCode() {
         return getResultCode();
     }
 
+    /**
+     * 响应消息
+     *
+     * @return 响应消息
+     */
     @Override
     public String responseMessage() {
         return getResultInfo();
     }
 
+    /**
+     * 响应内容
+     *
+     * @return T
+     */
     @Override
     public Object responseBody() {
         return getResult();
