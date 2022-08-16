@@ -1,0 +1,22 @@
+{
+  "resultCode": "000000",
+  "resultInfo": "success",
+  "result": {
+    "messageHead": {
+      "requestTime": "2022-08-06 14:35:06",
+      "accessToken": "135879624"
+    },
+    "messageBody": {
+      "objectMessage": [
+        {
+          "id": "1",
+          "name": "张三"
+        },
+        {
+          "id": "2",
+          "name": "罗老师"
+        }
+      ]
+    }
+  }
+}

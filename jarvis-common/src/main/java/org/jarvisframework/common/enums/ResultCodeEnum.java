@@ -15,35 +15,53 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.constant;
-
-import org.jarvisframework.common.domain.Response;
-import org.jarvisframework.common.enums.ResultCodeEnum;
+package org.jarvisframework.common.enums;
 
 /**
- * 通用返回常量表
+ * 返回码枚举类
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class ResponseConstants {
+public enum ResultCodeEnum {
     /**
-     * 公用返回前缀
+     * 通用成功返回码
      */
-    public static final String PUBLIC_RESPONSE_PREFIX = "PUB-";
+    PUB_SUCCESS("000000", "success"),
+    /**
+     * 通用失败返回码
+     */
+    PUB_ERROR("500000", "error"),
+    /**
+     * 系统异常
+     */
+    SYSTEM_EXCEPTION("500001", "System Error"),
+    /**
+     * 分布式锁获取异常信息
+     */
+    DISTRIBUTED_LOCK_ERROR_CODE("500002", "acquire distributed lock failed."),
+    ;
 
     /**
-     * 通用成功返回对象
+     * 返回码
      */
-    public static final Response PUB_SUCCESS = new Response(PUBLIC_RESPONSE_PREFIX + ResultCodeEnum.PUB_SUCCESS.getResultCode(), ResultCodeEnum.PUB_SUCCESS.getResultInfo());
+    private String resultCode;
 
     /**
-     * 通用失败返回对象
+     * 返回信息
      */
-    public static final Response PUB_ERROR = new Response(PUBLIC_RESPONSE_PREFIX + ResultCodeEnum.PUB_ERROR.getResultCode(), ResultCodeEnum.PUB_ERROR.getResultInfo());
+    private String resultInfo;
 
-    /**
-     * 分布式锁异常
-     */
-    public static final Response DISTRIBUTED_LOCK_ERROR = new Response(ResultCodeEnum.DISTRIBUTED_LOCK_ERROR_CODE.getResultCode(), ResultCodeEnum.DISTRIBUTED_LOCK_ERROR_CODE.getResultInfo());
+    ResultCodeEnum(String resultCode, String resultInfo) {
+        this.resultCode = resultCode;
+        this.resultInfo = resultInfo;
+    }
+
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public String getResultInfo() {
+        return resultInfo;
+    }
 }

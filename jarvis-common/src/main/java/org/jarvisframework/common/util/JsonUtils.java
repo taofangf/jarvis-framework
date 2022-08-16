@@ -15,34 +15,46 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.exception;
+package org.jarvisframework.common.util;
 
-import org.jarvisframework.common.domain.Response;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+
+import java.util.Map;
 
 /**
- * 分布式锁异常
+ * JSON工具类
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class DistributedLockException extends BaseException {
-    
+public class JsonUtils {
+
     /**
-     * 公用异常构造方法
+     * JSON转换对象
      *
-     * @param response {@link Response}
+     * @param json JSON字符串
+     * @param type 返回对象
+     * @param <T>  type
+     * @return JSON转换对象
      */
-    public DistributedLockException(Response response) {
-        super(response);
+    public static <T> T parseToObject(String json, Class<T> type) {
+        return JSON.parseObject(json, new TypeReference<T>(type) {
+        });
     }
 
     /**
-     * 公用异常构造方法
+     * JSON转指定类型Map
      *
-     * @param resultCode 返回码
-     * @param resultInfo 返回信息
+     * @param json      JSON字符串
+     * @param keyType   key类型
+     * @param valueType value类型
+     * @param <K>       keyType
+     * @param <V>       valueType
+     * @return JSON转指定类型Map
      */
-    public DistributedLockException(String resultCode, String resultInfo) {
-        super(resultCode, resultInfo);
+    public static <K, V> Map<K, V> parseToMap(String json, Class<K> keyType, Class<V> valueType) {
+        return JSON.parseObject(json, new TypeReference<Map<K, V>>(keyType, valueType) {
+        });
     }
 }

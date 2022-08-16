@@ -15,34 +15,50 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.exception;
+package org.jarvisframework.common.api.model;
 
-import org.jarvisframework.common.domain.Response;
+import java.util.StringJoiner;
 
 /**
- * 分布式锁异常
+ * 消息头
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class DistributedLockException extends BaseException {
-    
+public class MessageHead {
     /**
-     * 公用异常构造方法
-     *
-     * @param response {@link Response}
+     * 请求时间
      */
-    public DistributedLockException(Response response) {
-        super(response);
-    }
+    private String requestTime;
 
     /**
-     * 公用异常构造方法
-     *
-     * @param resultCode 返回码
-     * @param resultInfo 返回信息
+     * 请求token
      */
-    public DistributedLockException(String resultCode, String resultInfo) {
-        super(resultCode, resultInfo);
+    private String accessToken;
+
+    public String getRequestTime() {
+        return requestTime;
+    }
+
+    public MessageHead setRequestTime(String requestTime) {
+        this.requestTime = requestTime;
+        return this;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public MessageHead setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", MessageHead.class.getSimpleName() + "[", "]")
+                .add("requestTime='" + requestTime + "'")
+                .add("accessToken='" + accessToken + "'")
+                .toString();
     }
 }

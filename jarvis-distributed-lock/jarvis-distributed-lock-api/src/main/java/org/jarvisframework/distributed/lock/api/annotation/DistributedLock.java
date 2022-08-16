@@ -17,6 +17,8 @@
 
 package org.jarvisframework.distributed.lock.api.annotation;
 
+import org.jarvisframework.distributed.lock.api.constant.DistributedLockType;
+
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +47,7 @@ public @interface DistributedLock {
      *
      * @return 分布式锁类型
      */
-    String lockType() default "";
+    String lockType() default DistributedLockType.DISTRIBUTED_LOCK_ZOOKEEPER;
 
     /**
      * 尝试获取锁的等待时间,时间单位{@link DistributedLock#timeUnit()}

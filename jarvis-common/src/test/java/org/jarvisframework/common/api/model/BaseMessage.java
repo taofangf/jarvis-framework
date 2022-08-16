@@ -15,34 +15,50 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.exception;
+package org.jarvisframework.common.api.model;
 
-import org.jarvisframework.common.domain.Response;
+import java.util.StringJoiner;
 
 /**
- * 分布式锁异常
+ * 基础消息
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class DistributedLockException extends BaseException {
-    
+public class BaseMessage<T> {
     /**
-     * 公用异常构造方法
-     *
-     * @param response {@link Response}
+     * 消息头
      */
-    public DistributedLockException(Response response) {
-        super(response);
-    }
+    private MessageHead messageHead;
 
     /**
-     * 公用异常构造方法
-     *
-     * @param resultCode 返回码
-     * @param resultInfo 返回信息
+     * 消息Body
      */
-    public DistributedLockException(String resultCode, String resultInfo) {
-        super(resultCode, resultInfo);
+    private T messageBody;
+
+    public MessageHead getMessageHead() {
+        return messageHead;
+    }
+
+    public BaseMessage<T> setMessageHead(MessageHead messageHead) {
+        this.messageHead = messageHead;
+        return this;
+    }
+
+    public T getMessageBody() {
+        return messageBody;
+    }
+
+    public BaseMessage<T> setMessageBody(T messageBody) {
+        this.messageBody = messageBody;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", BaseMessage.class.getSimpleName() + "[", "]")
+                .add("messageHead=" + messageHead)
+                .add("messageBody=" + messageBody)
+                .toString();
     }
 }

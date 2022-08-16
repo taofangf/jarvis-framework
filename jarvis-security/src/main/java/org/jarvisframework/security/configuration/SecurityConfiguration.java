@@ -15,34 +15,13 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.exception;
-
-import org.jarvisframework.common.domain.Response;
+package org.jarvisframework.security.configuration;
 
 /**
- * 分布式锁异常
+ * 安全加固配置类
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class DistributedLockException extends BaseException {
-    
-    /**
-     * 公用异常构造方法
-     *
-     * @param response {@link Response}
-     */
-    public DistributedLockException(Response response) {
-        super(response);
-    }
-
-    /**
-     * 公用异常构造方法
-     *
-     * @param resultCode 返回码
-     * @param resultInfo 返回信息
-     */
-    public DistributedLockException(String resultCode, String resultInfo) {
-        super(resultCode, resultInfo);
-    }
+public class SecurityConfiguration {
 }

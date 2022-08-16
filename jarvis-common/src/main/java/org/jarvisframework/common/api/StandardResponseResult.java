@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.domain;
+package org.jarvisframework.common.api;
 
-import java.io.Serializable;
 import java.util.StringJoiner;
 
 /**
- * 返回信息
+ * 标准结果返回
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class Response implements Serializable {
-
-    private static final long serialVersionUID = -2477352648549065232L;
+public class StandardResponseResult<T> implements ResponseResult {
     /**
      * 返回码
      */
@@ -39,19 +36,16 @@ public class Response implements Serializable {
      */
     private String resultInfo;
 
-    public Response() {
-    }
-
-    public Response(String resultCode, String resultInfo) {
-        this.resultCode = resultCode;
-        this.resultInfo = resultInfo;
-    }
+    /**
+     * 返回内容
+     */
+    private T result;
 
     public String getResultCode() {
         return resultCode;
     }
 
-    public Response setResultCode(String resultCode) {
+    public StandardResponseResult<T> setResultCode(String resultCode) {
         this.resultCode = resultCode;
         return this;
     }
@@ -60,16 +54,56 @@ public class Response implements Serializable {
         return resultInfo;
     }
 
-    public Response setResultInfo(String resultInfo) {
+    public StandardResponseResult<T> setResultInfo(String resultInfo) {
         this.resultInfo = resultInfo;
         return this;
     }
 
+    public T getResult() {
+        return result;
+    }
+
+    public StandardResponseResult<T> setResult(T result) {
+        this.result = result;
+        return this;
+    }
+
+    /**
+     * 响应码
+     *
+     * @return 响应码
+     */
+    @Override
+    public String responseCode() {
+        return getResultCode();
+    }
+
+    /**
+     * 响应消息
+     *
+     * @return 响应消息
+     */
+    @Override
+    public String responseMessage() {
+        return getResultInfo();
+    }
+
+    /**
+     * 响应内容
+     *
+     * @return T
+     */
+    @Override
+    public Object responseBody() {
+        return getResult();
+    }
+
     @Override
     public String toString() {
-        return new StringJoiner(", ", Response.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", StandardResponseResult.class.getSimpleName() + "[", "]")
                 .add("resultCode='" + resultCode + "'")
                 .add("resultInfo='" + resultInfo + "'")
+                .add("result=" + result)
                 .toString();
     }
 }

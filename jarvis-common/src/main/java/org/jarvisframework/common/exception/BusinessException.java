@@ -15,29 +15,34 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.constant;
+package org.jarvisframework.common.exception;
+
+import org.jarvisframework.common.domain.Response;
 
 /**
- * 返回码常量定义
+ * 业务异常
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public final class ResultCode {
+public class BusinessException extends BaseException {
+
     /**
-     * 通用成功返回码
+     * 公用异常构造方法
+     *
+     * @param response {@link Response}
      */
-    public static final String PUB_SUCCESS_CODE = "000000";
+    public BusinessException(Response response) {
+        super(response);
+    }
+
     /**
-     * 通用成功返回码信息
+     * 公用异常构造方法
+     *
+     * @param resultCode 返回码
+     * @param resultInfo 返回信息
      */
-    public static final String PUB_SUCCESS_CODE_DOC = "success";
-    /**
-     * 分布式锁异常返回码
-     */
-    public static final String DISTRIBUTED_LOCK_ERROR_CODE = "100000";
-    /**
-     * 分布式锁获取异常信息
-     */
-    public static final String DISTRIBUTED_LOCK_ERROR_CODE_DOC = "acquire distributed lock failed";
+    public BusinessException(String resultCode, String resultInfo) {
+        super(resultCode, resultInfo);
+    }
 }
