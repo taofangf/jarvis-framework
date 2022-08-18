@@ -17,7 +17,7 @@
 
 package org.jarvisframework.common.exception;
 
-import org.jarvisframework.common.domain.Response;
+import org.jarvisframework.common.api.Result;
 
 /**
  * 业务异常
@@ -30,10 +30,10 @@ public class BusinessException extends BaseException {
     /**
      * 公用异常构造方法
      *
-     * @param response {@link Response}
+     * @param result {@link Result}
      */
-    public BusinessException(Response response) {
-        super(response);
+    public BusinessException(Result result) {
+        super(result);
     }
 
     /**

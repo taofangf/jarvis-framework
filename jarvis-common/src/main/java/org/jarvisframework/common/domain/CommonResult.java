@@ -18,7 +18,7 @@
 package org.jarvisframework.common.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import org.jarvisframework.common.constant.ResponseConstants;
+import org.jarvisframework.common.api.Result;
 import org.jarvisframework.common.enums.ResultCodeEnum;
 import org.jarvisframework.common.exception.BaseException;
 
@@ -30,7 +30,17 @@ import java.util.StringJoiner;
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class CommonResult<T> extends Response {
+public class CommonResult<T> {
+    /**
+     * 返回码
+     */
+    private String resultCode;
+
+    /**
+     * 返回信息
+     */
+    private String resultInfo;
+
     /**
      * 返回数据泛型
      */
@@ -42,14 +52,31 @@ public class CommonResult<T> extends Response {
     @JSONField(serialize = false)
     private boolean success;
 
-    public CommonResult(Response response, T data, boolean success) {
-        super(response.getResultCode(), response.getResultInfo());
+    /**
+     * 默认构造
+     *
+     * @param result  {@link Result}
+     * @param data    {@link #data}
+     * @param success {@link #success}
+     */
+    public CommonResult(Result result, T data, boolean success) {
+        this.resultCode = result.getResultCode();
+        this.resultInfo = result.getResultInfo();
         this.data = data;
         this.success = success;
     }
 
+    /**
+     * 默认构造
+     *
+     * @param resultCode {@link #resultCode}
+     * @param resultInfo {@link #resultInfo}
+     * @param data       {@link #data}
+     * @param success    {@link #success}
+     */
     public CommonResult(String resultCode, String resultInfo, T data, boolean success) {
-        super(resultCode, resultInfo);
+        this.resultCode = resultCode;
+        this.resultInfo = resultInfo;
         this.data = data;
         this.success = success;
     }
@@ -71,19 +98,19 @@ public class CommonResult<T> extends Response {
      * @return 响应成功
      */
     public static <T> CommonResult<T> ofSuccess(T data) {
-        return new CommonResult(ResponseConstants.PUB_SUCCESS, data, true);
+        return new CommonResult(ResultCodeEnum.PUB_SUCCESS, data, true);
     }
 
     /**
      * 响应成功
      *
-     * @param response {@link Response}
-     * @param data     返回对象
-     * @param <T>      data
+     * @param result {@link Result}
+     * @param data   返回对象
+     * @param <T>    data
      * @return 响应成功
      */
-    public static <T> CommonResult<T> ofSuccess(Response response, T data) {
-        return new CommonResult(response, data, true);
+    public static <T> CommonResult<T> ofSuccess(Result result, T data) {
+        return new CommonResult(result, data, true);
     }
 
     /**
@@ -116,29 +143,29 @@ public class CommonResult<T> extends Response {
      * @return 响应失败
      */
     public static <T> CommonResult<T> ofFail(T data) {
-        return new CommonResult(ResponseConstants.PUB_ERROR, data, false);
+        return new CommonResult(ResultCodeEnum.PUB_ERROR, data, false);
     }
 
     /**
      * 响应失败
      *
-     * @param response {@link Response}
-     * @param data     返回对象
-     * @param <T>      data
+     * @param result {@link Result}
+     * @param data   返回对象
+     * @param <T>    data
      * @return 响应失败
      */
-    public static <T> CommonResult<T> ofFail(Response response, T data) {
-        return new CommonResult(response, data, false);
+    public static <T> CommonResult<T> ofFail(Result result, T data) {
+        return new CommonResult(result, data, false);
     }
 
     /**
      * 失败响应
      *
-     * @param resultCodeEnum {@link ResultCodeEnum}
+     * @param result {@link Result}
      * @return {@link CommonResult}
      */
-    public static CommonResult ofFail(ResultCodeEnum resultCodeEnum) {
-        return new CommonResult(resultCodeEnum.getResultCode(), resultCodeEnum.getResultInfo(), null, false);
+    public static CommonResult ofFail(Result result) {
+        return new CommonResult(result.getResultCode(), result.getResultInfo(), null, false);
     }
 
     /**
@@ -165,6 +192,24 @@ public class CommonResult<T> extends Response {
         return new CommonResult(data.getResultCode(), data.getResultInfo(), null, false);
     }
 
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public CommonResult<T> setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+        return this;
+    }
+
+    public String getResultInfo() {
+        return resultInfo;
+    }
+
+    public CommonResult<T> setResultInfo(String resultInfo) {
+        this.resultInfo = resultInfo;
+        return this;
+    }
+
     public T getData() {
         return data;
     }
@@ -186,6 +231,8 @@ public class CommonResult<T> extends Response {
     @Override
     public String toString() {
         return new StringJoiner(", ", CommonResult.class.getSimpleName() + "[", "]")
+                .add("resultCode='" + resultCode + "'")
+                .add("resultInfo='" + resultInfo + "'")
                 .add("data=" + data)
                 .add("success=" + success)
                 .toString();

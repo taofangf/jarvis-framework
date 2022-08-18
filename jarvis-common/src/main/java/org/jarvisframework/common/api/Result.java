@@ -15,34 +15,26 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.exception;
-
-import org.jarvisframework.common.api.Result;
+package org.jarvisframework.common.api;
 
 /**
- * 分布式锁异常
+ * 返回结构定义
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class DistributedLockException extends BaseException {
-    
+public interface Result {
     /**
-     * 公用异常构造方法
+     * 获取返回码
      *
-     * @param result {@link Result}
+     * @return 返回码
      */
-    public DistributedLockException(Result result) {
-        super(result);
-    }
+    String getResultCode();
 
     /**
-     * 公用异常构造方法
+     * 获取返回信息
      *
-     * @param resultCode 返回码
-     * @param resultInfo 返回信息
+     * @return 返回信息
      */
-    public DistributedLockException(String resultCode, String resultInfo) {
-        super(resultCode, resultInfo);
-    }
+    String getResultInfo();
 }

@@ -17,21 +17,23 @@
 
 package org.jarvisframework.common.enums;
 
+import org.jarvisframework.common.api.Result;
+
 /**
  * 返回码枚举类
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public enum ResultCodeEnum {
+public enum ResultCodeEnum implements Result {
     /**
      * 通用成功返回码
      */
-    PUB_SUCCESS("000000", "success"),
+    PUB_SUCCESS("000000", "Success"),
     /**
      * 通用失败返回码
      */
-    PUB_ERROR("500000", "error"),
+    PUB_ERROR("500000", "Error"),
     /**
      * 系统异常
      */
@@ -39,7 +41,7 @@ public enum ResultCodeEnum {
     /**
      * 分布式锁获取异常信息
      */
-    DISTRIBUTED_LOCK_ERROR_CODE("500002", "acquire distributed lock failed."),
+    DISTRIBUTED_LOCK_ERROR_CODE("500002", "Acquire distributed lock failed."),
     ;
 
     /**
@@ -57,10 +59,12 @@ public enum ResultCodeEnum {
         this.resultInfo = resultInfo;
     }
 
+    @Override
     public String getResultCode() {
         return resultCode;
     }
 
+    @Override
     public String getResultInfo() {
         return resultInfo;
     }

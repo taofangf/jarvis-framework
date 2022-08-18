@@ -23,7 +23,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.jarvisframework.common.constant.ResponseConstants;
+import org.jarvisframework.common.enums.ResultCodeEnum;
 import org.jarvisframework.common.exception.DistributedLockException;
 import org.jarvisframework.distributed.lock.api.annotation.DistributedLock;
 import org.slf4j.Logger;
@@ -63,9 +63,7 @@ public class DistributedLockAspect {
     public Object aroundDistributedLock(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 
-        DistributedLock annotation = signature
-                .getMethod()
-                .getAnnotation(DistributedLock.class);
+        DistributedLock annotation = signature.getMethod().getAnnotation(DistributedLock.class);
 
         LockRegistry lockRegistry = getLockRegistryByLockType(annotation.lockType());
 
@@ -75,8 +73,8 @@ public class DistributedLockAspect {
             if (lock.tryLock(annotation.time(), annotation.timeUnit())) {
                 return joinPoint.proceed();
             } else {
-                logger.error("acquire distributed lock failed.");
-                throw new DistributedLockException(ResponseConstants.DISTRIBUTED_LOCK_ERROR);
+                logger.error("Acquire distributed lock failed.");
+                throw new DistributedLockException(ResultCodeEnum.DISTRIBUTED_LOCK_ERROR_CODE);
             }
         } finally {
             lock.unlock();

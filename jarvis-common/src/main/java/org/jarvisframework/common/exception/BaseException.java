@@ -17,7 +17,7 @@
 
 package org.jarvisframework.common.exception;
 
-import org.jarvisframework.common.domain.Response;
+import org.jarvisframework.common.api.Result;
 
 /**
  * 公用基础异常
@@ -39,12 +39,12 @@ public class BaseException extends RuntimeException {
     /**
      * 公用异常构造方法
      *
-     * @param response {@link Response}
+     * @param result {@link Result}
      */
-    public BaseException(Response response) {
-        super(response.getResultInfo());
-        this.resultCode = response.getResultCode();
-        this.resultInfo = response.getResultInfo();
+    public BaseException(Result result) {
+        super(result.getResultInfo());
+        this.resultCode = result.getResultCode();
+        this.resultInfo = result.getResultInfo();
     }
 
     /**
