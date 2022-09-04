@@ -26,6 +26,7 @@
     <version>${revision}</version>
     <modules>
         <module>jarvis-common</module>
+        <module>jarvis-common-web</module>
         <module>jarvis-swagger</module>
         <module>jarvis-distributed-lock</module>
         <module>jarvis-security</module>
@@ -90,6 +91,12 @@
                         <artifactId>swagger-annotations</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jarvis</groupId>
+                <artifactId>jarvis-common</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

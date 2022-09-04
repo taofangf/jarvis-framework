@@ -23,7 +23,8 @@ import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.jarvisframework.common.api.model.BaseMessage;
 import org.jarvisframework.common.enums.ResultCodeEnum;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;

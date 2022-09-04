@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.exception.handler;
+package org.jarvisframework.web.common.handler;
 
 import org.jarvisframework.common.domain.CommonResult;
 import org.jarvisframework.common.enums.ResultCodeEnum;

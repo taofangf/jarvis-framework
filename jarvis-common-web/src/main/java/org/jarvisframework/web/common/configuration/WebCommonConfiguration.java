@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.common.configuration;
+package org.jarvisframework.web.common.configuration;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
@@ -26,14 +26,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.converter.HttpMessageConverter;
 
 /**
- * 基础框架配置类
+ * 基础框架Web配置类
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-@ComponentScan(basePackages = "org.jarvisframework.common")
-public class CommonConfiguration {
-
+@ComponentScan(basePackages = "org.jarvisframework.web.common")
+public class WebCommonConfiguration {
     /**
      * FastJson解析器
      *
