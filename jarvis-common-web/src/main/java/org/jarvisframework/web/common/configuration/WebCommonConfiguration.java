@@ -20,7 +20,11 @@ package org.jarvisframework.web.common.configuration;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.jarvisframework.web.common.filter.authentication.AuthenticationFilter;
+import org.jarvisframework.web.common.filter.authentication.AuthenticationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -45,5 +49,17 @@ public class WebCommonConfiguration {
         config.setSerializerFeatures(SerializerFeature.PrettyFormat);
         converter.setFastJsonConfig(config);
         return new HttpMessageConverters(new HttpMessageConverter[]{converter});
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "jarvis.authentication.enable", havingValue = "true")
+    public FilterRegistrationBean<AuthenticationFilter> authenticationFilterRegistrationBean(
+            AuthenticationProperties authenticationProperties) {
+        FilterRegistrationBean<AuthenticationFilter> registrationBean = new FilterRegistrationBean();
+        registrationBean.setName("AuthenticationFilter");
+        registrationBean.setFilter(new AuthenticationFilter(authenticationProperties));
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(authenticationProperties.getOrder());
+        return registrationBean;
     }
 }

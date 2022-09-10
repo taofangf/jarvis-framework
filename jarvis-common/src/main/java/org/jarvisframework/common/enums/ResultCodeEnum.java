@@ -42,6 +42,10 @@ public enum ResultCodeEnum implements Result {
      * 分布式锁获取异常信息
      */
     DISTRIBUTED_LOCK_ERROR_CODE("500002", "Acquire distributed lock failed."),
+    /**
+     * 身份验证异常
+     */
+    AUTHENTICATION_ERROR("500003", "Authenticate Error"),
     ;
 
     /**

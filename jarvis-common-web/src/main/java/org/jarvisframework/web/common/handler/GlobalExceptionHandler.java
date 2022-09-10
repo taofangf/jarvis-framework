@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BaseException.class)
     public CommonResult baseExceptionHandler(BaseException e) {
         LOGGER.error(e.getResultInfo());
-        return CommonResult.ofFail(ResultCodeEnum.SYSTEM_EXCEPTION);
+        return CommonResult.ofFail(e.getResultCode(), e.getResultInfo(), null);
     }
 
     /**

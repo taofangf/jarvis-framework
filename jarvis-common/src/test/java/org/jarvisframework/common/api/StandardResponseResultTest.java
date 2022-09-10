@@ -120,12 +120,12 @@ public class StandardResponseResultTest {
 
     @Test
     public void objectMessageTest1() {
-        BaseMessage<ObjectMessage> message = convert(protocolStr);
-        System.out.println("message = " + message);
-
-        ObjectMessage messageBody = message.getMessageBody();
-        List<ObjectMessage.ObjectMessageDTO> objectMessage = messageBody.getObjectMessage();
-        System.out.println("objectMessage = " + objectMessage);
+//        BaseMessage<ObjectMessage> message = convert(protocolStr);
+//        System.out.println("message = " + message);
+//
+//        ObjectMessage messageBody = message.getMessageBody();
+//        List<ObjectMessage.ObjectMessageDTO> objectMessage = messageBody.getObjectMessage();
+//        System.out.println("objectMessage = " + objectMessage);
 
     }
 
