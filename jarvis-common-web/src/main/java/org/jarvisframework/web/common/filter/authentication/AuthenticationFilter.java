@@ -33,6 +33,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 身份验证过滤器
@@ -53,6 +55,21 @@ public class AuthenticationFilter implements Filter {
      */
     private AuthenticationProperties authenticationProperties;
 
+    /**
+     * 路径匹配器
+     */
+    private PathMatcher pathMatcher = new AntPathMatcher();
+
+    /**
+     * AppId对应SecretKey缓存
+     */
+    private final Map<String, String> APP_SECRET_KEY_CACHE_MAP = new ConcurrentHashMap<>(64);
+
+    /**
+     * 上次查询时间戳
+     */
+    private long lastQueryTimestamp = 0L;
+
     public AuthenticationFilter(AuthenticationProperties authenticationProperties) {
         this.authenticationProperties = authenticationProperties;
         this.ignoreUrlPatternArray = authenticationProperties.getIgnoreUrlPattern().split("\\|");
@@ -67,7 +84,6 @@ public class AuthenticationFilter implements Filter {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        PathMatcher pathMatcher = new AntPathMatcher();
         for (String urlPattern : ignoreUrlPatternArray) {
             if (pathMatcher.match(urlPattern, request.getRequestURI())) {
                 LOGGER.info("url {} in whiteList,skip authenticate.", request.getRequestURI());
@@ -106,17 +122,44 @@ public class AuthenticationFilter implements Filter {
             }
         } catch (NumberFormatException e) {
             LOGGER.error("authenticate failed, parse timestamp exception");
+            authenticateFailedResponse(response);
+            return;
         }
 
-        SecretKeyService secretKeyService = SpringUtil.getBean(SecretKeyService.class);
-        String secretKey = secretKeyService.getSecretKeyByAppId(appId);
+        String secretKey = getSecretKey(appId, localTimestamp);
 
-        if (SignatureUtils.verifySignatureByHmacSha256(appId, timestamp, secretKey, sign)) {
+        if (StrUtil.isNotBlank(secretKey) && SignatureUtils.verifySignatureByHmacSha256(appId, timestamp, secretKey, sign)) {
             chain.doFilter(request, response);
         } else {
             authenticateFailedResponse(response);
         }
-        return;
+
+    }
+
+    /**
+     * 获取SecretKey
+     *
+     * @param appId          接入方appId
+     * @param localTimestamp 当前时间
+     * @return 秘钥
+     */
+    private String getSecretKey(String appId, long localTimestamp) {
+        if (Math.abs(localTimestamp - lastQueryTimestamp) > authenticationProperties.getSecretKeyCachePeriod()) {
+            String secretKey = StrUtil.EMPTY;
+            try {
+                SecretKeyService secretKeyService = SpringUtil.getBean(SecretKeyService.class);
+                secretKey = secretKeyService.getSecretKeyByAppId(appId);
+            } catch (Exception e) {
+                LOGGER.error("getSecretKeyByAppId Exception.[{}]", e.getMessage());
+            } finally {
+                APP_SECRET_KEY_CACHE_MAP.put(appId, secretKey);
+                lastQueryTimestamp = localTimestamp;
+            }
+            return secretKey;
+        } else {
+            return APP_SECRET_KEY_CACHE_MAP.getOrDefault(appId, StrUtil.EMPTY);
+        }
+
     }
 
     /**

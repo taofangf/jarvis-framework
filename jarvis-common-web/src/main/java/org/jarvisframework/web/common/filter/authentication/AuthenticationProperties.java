@@ -45,9 +45,14 @@ public class AuthenticationProperties {
     private String ignoreUrlPattern = "";
 
     /**
-     * 时间戳超时阈值,单位:ms
+     * 时间戳超时阈值,默认五分钟 单位:ms
      */
     private long timestampThreshold = 300000L;
+
+    /**
+     * 秘钥缓存周期,默认五分钟 单位:ms
+     */
+    private long secretKeyCachePeriod = 300000L;
 
     public boolean isEnable() {
         return enable;
@@ -82,6 +87,15 @@ public class AuthenticationProperties {
 
     public AuthenticationProperties setTimestampThreshold(long timestampThreshold) {
         this.timestampThreshold = timestampThreshold;
+        return this;
+    }
+
+    public long getSecretKeyCachePeriod() {
+        return secretKeyCachePeriod;
+    }
+
+    public AuthenticationProperties setSecretKeyCachePeriod(long secretKeyCachePeriod) {
+        this.secretKeyCachePeriod = secretKeyCachePeriod;
         return this;
     }
 }
