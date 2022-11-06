@@ -17,16 +17,16 @@
 
 package org.jarvisframework.common.desensitization.annotation;
 
+import cn.hutool.core.util.DesensitizedUtil;
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.jarvisframework.common.desensitization.DesensitizedCustomizer;
-import org.jarvisframework.common.desensitization.enums.DesensitizedTypeEnum;
 import org.jarvisframework.common.desensitization.jackson.JacksonDesensitizedValueSerializer;
 
 import java.lang.annotation.*;
 
 /**
- * 数据脱敏标记注解
+ * 脱敏标记注解
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
@@ -37,19 +37,18 @@ import java.lang.annotation.*;
 @Inherited
 @JacksonAnnotationsInside
 @JsonSerialize(using = JacksonDesensitizedValueSerializer.class)
-public @interface Sensitive {
+public @interface Desensitization {
     /**
-     * 字段模糊化策略,优先级低于{@link #desensitizedUsing()}
+     * 脱敏类型,优先级低于{@link #desensitizedUsing()}
      *
-     * @return {@link DesensitizedTypeEnum}
+     * @return {@link DesensitizedUtil.DesensitizedType}
      */
-    DesensitizedTypeEnum strategy() default DesensitizedTypeEnum.NONE;
+    DesensitizedUtil.DesensitizedType value() default DesensitizedUtil.DesensitizedType.USER_ID;
 
     /**
-     * 自定义脱敏实现类,优先级最高。 有自定义实现优先使用自定义实现
+     * 自定义脱敏实现,优先级最高
      *
-     * @return {@link DesensitizedCustomizer}的实现类
-     * @see DesensitizedCustomizer
+     * @return {@link DesensitizedCustomizer}自定义实现子类
      */
-    Class<?> desensitizedUsing() default Void.class;
+    Class<? extends DesensitizedCustomizer> desensitizedUsing() default DesensitizedCustomizer.DefaultDesensitized.class;
 }

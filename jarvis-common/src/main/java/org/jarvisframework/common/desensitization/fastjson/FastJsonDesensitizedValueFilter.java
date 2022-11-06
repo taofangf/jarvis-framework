@@ -17,12 +17,11 @@
 
 package org.jarvisframework.common.desensitization.fastjson;
 
+import cn.hutool.core.util.DesensitizedUtil;
 import com.alibaba.fastjson.serializer.BeanContext;
 import com.alibaba.fastjson.serializer.ContextValueFilter;
 import org.jarvisframework.common.desensitization.DesensitizedCustomizer;
-import org.jarvisframework.common.desensitization.annotation.Sensitive;
-import org.jarvisframework.common.desensitization.enums.DesensitizedTypeEnum;
-import org.jarvisframework.common.desensitization.util.DesensitizedUtils;
+import org.jarvisframework.common.desensitization.annotation.Desensitization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,20 +38,17 @@ public class FastJsonDesensitizedValueFilter implements ContextValueFilter {
 
     @Override
     public Object process(BeanContext context, Object object, String name, Object value) {
-        Sensitive sensitive = context.getAnnation(Sensitive.class);
-        /**
-         * 优先使用自定义实现脱敏
-         */
-        if (Objects.nonNull(sensitive) && sensitive.desensitizedUsing() != Void.class) {
+        Desensitization desensitization = context.getAnnation(Desensitization.class);
+        if (Objects.nonNull(desensitization) &&
+                desensitization.desensitizedUsing() != DesensitizedCustomizer.DefaultDesensitized.class) {
             try {
-                DesensitizedCustomizer desensitizedCustomizer =
-                        (DesensitizedCustomizer) sensitive.desensitizedUsing().newInstance();
+                DesensitizedCustomizer desensitizedCustomizer = desensitization.desensitizedUsing().newInstance();
                 return desensitizedCustomizer.desensitized(value);
             } catch (Exception e) {
                 LOGGER.error("DesensitizedCustomizer initialize exception", e);
             }
-            DesensitizedTypeEnum desensitizedType = sensitive.strategy();
-            return DesensitizedUtils.desensitized((CharSequence) value, desensitizedType);
+            DesensitizedUtil.DesensitizedType desensitizedType = desensitization.value();
+            return DesensitizedUtil.desensitized((CharSequence) value, desensitizedType);
         }
         return value;
     }

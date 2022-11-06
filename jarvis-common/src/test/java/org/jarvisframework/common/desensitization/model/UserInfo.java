@@ -17,10 +17,10 @@
 
 package org.jarvisframework.common.desensitization.model;
 
+import cn.hutool.core.util.DesensitizedUtil;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.jarvisframework.common.desensitization.DesensitizedTest;
-import org.jarvisframework.common.desensitization.annotation.Sensitive;
-import org.jarvisframework.common.desensitization.enums.DesensitizedTypeEnum;
+import org.jarvisframework.common.desensitization.annotation.Desensitization;
 
 import java.util.StringJoiner;
 
@@ -34,20 +34,19 @@ public class UserInfo {
     /**
      * 用户名
      */
-    @Sensitive(strategy = DesensitizedTypeEnum.CHINESE_NAME, desensitizedUsing = DesensitizedTest.HideDesensitized.class)
+    @Desensitization(DesensitizedUtil.DesensitizedType.CHINESE_NAME)
     private String username;
 
     /**
      * 密码
      */
-    @Sensitive(strategy = DesensitizedTypeEnum.PASSWORD)
+    @Desensitization(desensitizedUsing = DesensitizedTest.HideDesensitized.class)
     private String password;
 
     /**
      * 手机号
      */
-    @Sensitive(strategy = DesensitizedTypeEnum.MOBILE_PHONE)
-    @JSONField(name = "telnum")
+    @JSONField(name = "telNum")
     private String phoneNumber;
 
     public String getUsername() {

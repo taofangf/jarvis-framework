@@ -17,6 +17,7 @@
 
 package org.jarvisframework.common.desensitization.jackson;
 
+import cn.hutool.core.util.DesensitizedUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -24,8 +25,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import org.jarvisframework.common.desensitization.DesensitizedCustomizer;
-import org.jarvisframework.common.desensitization.annotation.Sensitive;
-import org.jarvisframework.common.desensitization.util.DesensitizedUtils;
+import org.jarvisframework.common.desensitization.annotation.Desensitization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,58 +43,29 @@ public class JacksonDesensitizedValueSerializer extends JsonSerializer implement
 
     /**
      * 脱敏标记注解
-     * {@link Sensitive}
+     * {@link Desensitization}
      */
-    private Sensitive sensitive;
+    private Desensitization desensitization;
 
-    /**
-     * Method that can be called to ask implementation to serialize
-     * values of type this serializer handles.
-     *
-     * @param value       Value to serialize; can <b>not</b> be null.
-     * @param gen         Generator used to output resulting Json content
-     * @param serializers Provider that can be used to get serializers for
-     */
     @Override
     public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        /**
-         * 优先使用自定义实现脱敏
-         */
-        if (sensitive.desensitizedUsing() != Void.class) {
+        if (desensitization.desensitizedUsing() != DesensitizedCustomizer.DefaultDesensitized.class) {
             try {
-                DesensitizedCustomizer desensitizedCustomizer =
-                        (DesensitizedCustomizer) sensitive.desensitizedUsing().newInstance();
+                DesensitizedCustomizer desensitizedCustomizer = desensitization.desensitizedUsing().newInstance();
                 gen.writeObject(desensitizedCustomizer.desensitized(value));
                 return;
             } catch (Exception e) {
                 LOGGER.error("DesensitizedCustomizer initialize exception", e);
             }
         }
-        gen.writeString(DesensitizedUtils.desensitized((CharSequence) value, sensitive.strategy()));
+        gen.writeString(DesensitizedUtil.desensitized((CharSequence) value, desensitization.value()));
     }
 
-    /**
-     * Method called to see if a different (or differently configured) serializer
-     * is needed to serialize values of specified property.
-     * Note that instance that this method is called on is typically shared one and
-     * as a result method should <b>NOT</b> modify this instance but rather construct
-     * and return a new instance. This instance should only be returned as-is, in case
-     * it is already suitable for use.
-     *
-     * @param prov     Serializer provider to use for accessing config, other serializers
-     * @param property Method or field that represents the property
-     *                 (and is used to access value to serialize).
-     *                 Should be available; but there may be cases where caller cannot provide it and
-     *                 null is passed instead (in which case impls usually pass 'this' serializer as is)
-     * @return Serializer to use for serializing values of specified property;
-     * may be this instance or a new instance.
-     * @throws JsonMappingException
-     */
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
         if (Objects.nonNull(property)) {
-            sensitive = property.getAnnotation(Sensitive.class);
-            if (Objects.nonNull(sensitive)) {
+            desensitization = property.getAnnotation(Desensitization.class);
+            if (Objects.nonNull(desensitization)) {
                 return this;
             }
             return prov.findValueSerializer(property.getType(), property);

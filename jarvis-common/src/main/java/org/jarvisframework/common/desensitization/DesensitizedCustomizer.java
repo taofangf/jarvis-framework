@@ -31,4 +31,15 @@ public interface DesensitizedCustomizer {
      * @return 脱敏后的数据
      */
     Object desensitized(Object object);
+
+    /**
+     * 默认脱敏，啥都不做原样返回
+     */
+    class DefaultDesensitized implements DesensitizedCustomizer {
+
+        @Override
+        public Object desensitized(Object object) {
+            return object;
+        }
+    }
 }
