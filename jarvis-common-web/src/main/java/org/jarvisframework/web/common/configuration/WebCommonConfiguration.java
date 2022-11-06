@@ -17,9 +17,11 @@
 
 package org.jarvisframework.web.common.configuration;
 
+import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.jarvisframework.common.desensitization.fastjson.FastJsonDesensitizedValueFilter;
 import org.jarvisframework.web.common.filter.authentication.AuthenticationFilter;
 import org.jarvisframework.web.common.filter.authentication.AuthenticationProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,6 +30,8 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.converter.HttpMessageConverter;
+
+import java.util.HashMap;
 
 /**
  * 基础框架Web配置类
@@ -43,10 +47,12 @@ public class WebCommonConfiguration {
      * @return {@link HttpMessageConverters}
      */
     @Bean
+    @ConditionalOnProperty(value = "jarvis.fastjson.enable", havingValue = "true")
     public HttpMessageConverters fastJsonHttpMessageConvert() {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig config = new FastJsonConfig();
         config.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        config.setSerializeFilters(new FastJsonDesensitizedValueFilter());
         converter.setFastJsonConfig(config);
         return new HttpMessageConverters(new HttpMessageConverter[]{converter});
     }
