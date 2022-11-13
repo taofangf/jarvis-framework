@@ -15,42 +15,42 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.web.common.webserver;
+package org.jarvisframework.web.common.servlet.embedded.tomcat;
 
-import cn.hutool.core.util.StrUtil;
 import org.apache.catalina.connector.Connector;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.WebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
- * Tomcat多端口实现
+ * Embed Tomcat自定义多个http端口实现
+ * <p>
+ * {@link WebServerFactoryCustomizer} and
+ * {@link org.springframework.boot.autoconfigure.web.embedded.TomcatWebServerFactoryCustomizer}
+ * <p>
+ * 其他拓展可参考{@link org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer} 、
+ * {@link org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer}
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-@Service
+@Component
 public class TomcatMultiPortCustomizer implements WebServerFactoryCustomizer<TomcatServletWebServerFactory> {
 
     @Resource
-    private TomcatMultiPortProperties tomcatMultiPortProperties;
+    private CustomizeWebServerProperties customizeWebServerProperties;
 
-    /**
-     * Customize the specified {@link WebServerFactory}.
-     *
-     * @param factory the web server factory to customize
-     */
+
     @Override
     public void customize(TomcatServletWebServerFactory factory) {
-        if (Objects.nonNull(tomcatMultiPortProperties) && StrUtil.isNotBlank(tomcatMultiPortProperties.getPorts())) {
-            String[] ports = tomcatMultiPortProperties.getPorts().split(StrUtil.COMMA);
+        if (Objects.nonNull(customizeWebServerProperties)) {
+            Integer[] ports = customizeWebServerProperties.getPorts();
             for (int i = 0; i < ports.length; i++) {
                 Connector connector = new Connector();
-                connector.setPort(Integer.parseInt(ports[i]));
+                connector.setPort(ports[i]);
                 factory.addAdditionalTomcatConnectors(connector);
             }
         }

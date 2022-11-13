@@ -43,7 +43,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 1.0.0
  */
 public class AuthenticationFilter implements Filter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
 
     /**
      * 白名单url数组
@@ -78,7 +78,7 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (!(servletRequest instanceof HttpServletRequest) || !(servletResponse instanceof HttpServletResponse)) {
-            LOGGER.error("illegal request.");
+            logger.error("illegal request.");
             return;
         }
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -86,7 +86,7 @@ public class AuthenticationFilter implements Filter {
 
         for (String urlPattern : ignoreUrlPatternArray) {
             if (pathMatcher.match(urlPattern, request.getRequestURI())) {
-                LOGGER.info("url {} in whiteList,skip authenticate.", request.getRequestURI());
+                logger.info("url {} in whiteList,skip authenticate.", request.getRequestURI());
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -107,7 +107,7 @@ public class AuthenticationFilter implements Filter {
         String sign = request.getHeader("sign");
 
         if (!StrUtil.isAllNotBlank(appId, timestamp, sign)) {
-            LOGGER.error("appId timestamp or sign is empty,appId = {},timestamp = {},sign = {}", appId, timestamp, sign);
+            logger.error("appId timestamp or sign is empty,appId = {},timestamp = {},sign = {}", appId, timestamp, sign);
             authenticateFailedResponse(response);
             return;
         }
@@ -116,12 +116,12 @@ public class AuthenticationFilter implements Filter {
         try {
             long remoteTimeStamp = Long.parseLong(timestamp);
             if (Math.abs(localTimestamp - remoteTimeStamp) > authenticationProperties.getTimestampThreshold()) {
-                LOGGER.error("authenticate failed, timestamp invalid");
+                logger.error("authenticate failed, timestamp invalid");
                 authenticateFailedResponse(response);
                 return;
             }
         } catch (NumberFormatException e) {
-            LOGGER.error("authenticate failed, parse timestamp exception");
+            logger.error("authenticate failed, parse timestamp exception");
             authenticateFailedResponse(response);
             return;
         }
@@ -150,7 +150,7 @@ public class AuthenticationFilter implements Filter {
                 SecretKeyService secretKeyService = SpringUtil.getBean(SecretKeyService.class);
                 secretKey = secretKeyService.getSecretKeyByAppId(appId);
             } catch (Exception e) {
-                LOGGER.error("getSecretKeyByAppId Exception.[{}]", e.getMessage());
+                logger.error("getSecretKeyByAppId Exception.[{}]", e.getMessage());
             } finally {
                 APP_SECRET_KEY_CACHE_MAP.put(appId, secretKey);
                 lastQueryTimestamp = localTimestamp;

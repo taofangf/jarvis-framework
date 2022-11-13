@@ -33,7 +33,7 @@ import java.util.Objects;
  * @since 1.0.0
  */
 public class HttpResponseUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HttpResponseUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpResponseUtils.class);
 
     /**
      * 响应JSON字符串
@@ -49,7 +49,7 @@ public class HttpResponseUtils {
             printWriter.write(json);
             printWriter.flush();
         } catch (IOException e) {
-            LOGGER.error("responseJsonStr exception", e);
+            logger.error("responseJsonStr exception", e);
         } finally {
             if (Objects.nonNull(printWriter)) {
                 printWriter.close();

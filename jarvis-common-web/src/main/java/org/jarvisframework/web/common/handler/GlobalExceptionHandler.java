@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 分布式锁异常处理
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(DistributedLockException.class)
     public CommonResult distributedExceptionHandler(DistributedLockException e) {
-        LOGGER.error(e.getResultInfo());
+        logger.error(e.getResultInfo());
         return CommonResult.ofFail(e.getResultCode(), e.getResultInfo(), null);
     }
 
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public CommonResult businessExceptionHandler(BusinessException e) {
-        LOGGER.error(e.getResultInfo());
+        logger.error(e.getResultInfo());
         return CommonResult.ofFail(e.getResultCode(), e.getResultInfo(), null);
     }
 
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BaseException.class)
     public CommonResult baseExceptionHandler(BaseException e) {
-        LOGGER.error(e.getResultInfo());
+        logger.error(e.getResultInfo());
         return CommonResult.ofFail(e.getResultCode(), e.getResultInfo(), null);
     }
 
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public CommonResult exceptionHandler(Exception e) {
-        LOGGER.error(e.getMessage(), e);
+        logger.error(e.getMessage(), e);
         return CommonResult.ofFail(ResultCodeEnum.SYSTEM_EXCEPTION);
     }
 }

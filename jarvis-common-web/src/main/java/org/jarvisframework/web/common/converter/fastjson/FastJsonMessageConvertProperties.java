@@ -15,31 +15,31 @@
  * limitations under the License.
  */
 
-package org.jarvisframework.web.common.webserver;
+package org.jarvisframework.web.common.converter.fastjson;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * Tomcat 多端口配置
+ * fastjson消息转化器配置
  *
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-@ConfigurationProperties(prefix = "jarvis.tomcat.ports")
+@ConfigurationProperties(prefix = "jarvis.fastjson")
 @Component
-public class TomcatMultiPortProperties {
+public class FastJsonMessageConvertProperties {
     /**
-     * Tomcat多端口配置. 多个端口用逗号分隔
+     * 是否启用fastjson作为HttpMessageConvert
      */
-    private String ports;
+    private boolean enable;
 
-    public String getPorts() {
-        return ports;
+    public boolean isEnable() {
+        return enable;
     }
 
-    public TomcatMultiPortProperties setPorts(String ports) {
-        this.ports = ports;
+    public FastJsonMessageConvertProperties setEnable(boolean enable) {
+        this.enable = enable;
         return this;
     }
 }

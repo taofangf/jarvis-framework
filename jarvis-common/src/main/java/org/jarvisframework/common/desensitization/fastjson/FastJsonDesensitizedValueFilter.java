@@ -34,7 +34,7 @@ import java.util.Objects;
  * @since 1.0.0
  */
 public class FastJsonDesensitizedValueFilter implements ContextValueFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FastJsonDesensitizedValueFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(FastJsonDesensitizedValueFilter.class);
 
     @Override
     public Object process(BeanContext context, Object object, String name, Object value) {
@@ -45,11 +45,10 @@ public class FastJsonDesensitizedValueFilter implements ContextValueFilter {
                     DesensitizedCustomizer desensitizedCustomizer = desensitization.desensitizedUsing().newInstance();
                     return desensitizedCustomizer.desensitized(value);
                 } catch (Exception e) {
-                    LOGGER.error("DesensitizedCustomizer initialize exception", e);
+                    logger.error("DesensitizedCustomizer initialize exception", e);
                 }
             }
-            DesensitizedUtil.DesensitizedType desensitizedType = desensitization.value();
-            return DesensitizedUtil.desensitized((CharSequence) value, desensitizedType);
+            return DesensitizedUtil.desensitized((CharSequence) value, desensitization.value());
         }
         return value;
     }

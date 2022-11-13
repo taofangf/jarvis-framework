@@ -39,7 +39,7 @@ import java.util.Objects;
  * @since 1.0.0
  */
 public class JacksonDesensitizedValueSerializer extends JsonSerializer implements ContextualSerializer {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JacksonDesensitizedValueSerializer.class);
+    private static final Logger logger = LoggerFactory.getLogger(JacksonDesensitizedValueSerializer.class);
 
     /**
      * 脱敏标记注解
@@ -55,7 +55,7 @@ public class JacksonDesensitizedValueSerializer extends JsonSerializer implement
                 gen.writeObject(desensitizedCustomizer.desensitized(value));
                 return;
             } catch (Exception e) {
-                LOGGER.error("DesensitizedCustomizer initialize exception", e);
+                logger.error("DesensitizedCustomizer initialize exception", e);
             }
         }
         gen.writeString(DesensitizedUtil.desensitized((CharSequence) value, desensitization.value()));
