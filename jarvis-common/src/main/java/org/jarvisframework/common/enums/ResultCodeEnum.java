@@ -51,12 +51,12 @@ public enum ResultCodeEnum implements Result {
     /**
      * 返回码
      */
-    private String resultCode;
+    private final String resultCode;
 
     /**
      * 返回信息
      */
-    private String resultInfo;
+    private final String resultInfo;
 
     ResultCodeEnum(String resultCode, String resultInfo) {
         this.resultCode = resultCode;

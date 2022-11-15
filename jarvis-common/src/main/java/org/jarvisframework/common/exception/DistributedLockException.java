@@ -26,7 +26,9 @@ import org.jarvisframework.common.api.Result;
  * @since 1.0.0
  */
 public class DistributedLockException extends BaseException {
-    
+
+    private static final long serialVersionUID = -1497492696919275157L;
+
     /**
      * 公用异常构造方法
      *

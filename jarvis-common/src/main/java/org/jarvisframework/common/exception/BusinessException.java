@@ -27,6 +27,8 @@ import org.jarvisframework.common.api.Result;
  */
 public class BusinessException extends BaseException {
 
+    private static final long serialVersionUID = 3459043842562238677L;
+
     /**
      * 公用异常构造方法
      *

@@ -48,9 +48,9 @@ public class TomcatMultiPortCustomizer implements WebServerFactoryCustomizer<Tom
     public void customize(TomcatServletWebServerFactory factory) {
         if (Objects.nonNull(customizeWebServerProperties)) {
             Integer[] ports = customizeWebServerProperties.getPorts();
-            for (int i = 0; i < ports.length; i++) {
+            for (Integer port : ports) {
                 Connector connector = new Connector();
-                connector.setPort(ports[i]);
+                connector.setPort(port);
                 factory.addAdditionalTomcatConnectors(connector);
             }
         }

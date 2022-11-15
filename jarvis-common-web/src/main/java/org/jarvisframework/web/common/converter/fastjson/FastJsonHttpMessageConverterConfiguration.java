@@ -17,14 +17,12 @@
 
 package org.jarvisframework.web.common.converter.fastjson;
 
-import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.jarvisframework.common.desensitization.fastjson.FastJsonDesensitizedValueFilter;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +67,7 @@ public class FastJsonHttpMessageConverterConfiguration {
         mediaTypes.add(MediaType.TEXT_PLAIN);
         mediaTypes.add(MediaType.TEXT_XML);
         converter.setSupportedMediaTypes(mediaTypes);
-        return new HttpMessageConverters(new HttpMessageConverter[]{converter});
+
+        return new HttpMessageConverters(converter);
     }
 }

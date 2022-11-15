@@ -51,7 +51,7 @@ public class WebCommonConfiguration {
     @ConditionalOnProperty(value = "jarvis.authentication.enable", havingValue = "true")
     public FilterRegistrationBean<AuthenticationFilter> authenticationFilterRegistrationBean(
             AuthenticationProperties authenticationProperties) {
-        FilterRegistrationBean<AuthenticationFilter> registrationBean = new FilterRegistrationBean();
+        FilterRegistrationBean<AuthenticationFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setName("AuthenticationFilter");
         registrationBean.setFilter(new AuthenticationFilter(authenticationProperties));
         registrationBean.addUrlPatterns("/*");

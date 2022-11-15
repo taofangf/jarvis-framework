@@ -26,15 +26,16 @@ import org.jarvisframework.common.api.Result;
  * @since 1.0.0
  */
 public class BaseException extends RuntimeException {
+    private static final long serialVersionUID = -3030358614350723410L;
     /**
      * 返回码
      */
-    private String resultCode;
+    private final String resultCode;
 
     /**
      * 返回信息
      */
-    private String resultInfo;
+    private final String resultInfo;
 
     /**
      * 公用异常构造方法
