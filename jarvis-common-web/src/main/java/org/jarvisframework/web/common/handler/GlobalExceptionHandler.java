@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
      * @return {@link CommonResult}
      */
     @ExceptionHandler(DistributedLockException.class)
-    public CommonResult distributedExceptionHandler(DistributedLockException e) {
+    public CommonResult<?> distributedExceptionHandler(DistributedLockException e) {
         logger.error(e.getResultInfo());
         return CommonResult.ofFail(e.getResultCode(), e.getResultInfo(), null);
     }
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
      * @return {@link CommonResult}
      */
     @ExceptionHandler(BusinessException.class)
-    public CommonResult businessExceptionHandler(BusinessException e) {
+    public CommonResult<?> businessExceptionHandler(BusinessException e) {
         logger.error(e.getResultInfo());
         return CommonResult.ofFail(e.getResultCode(), e.getResultInfo(), null);
     }
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
      * @return {@link CommonResult}
      */
     @ExceptionHandler(BaseException.class)
-    public CommonResult baseExceptionHandler(BaseException e) {
+    public CommonResult<?> baseExceptionHandler(BaseException e) {
         logger.error(e.getResultInfo());
         return CommonResult.ofFail(e.getResultCode(), e.getResultInfo(), null);
     }
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
      * @return {@link CommonResult}
      */
     @ExceptionHandler(Exception.class)
-    public CommonResult exceptionHandler(Exception e) {
+    public CommonResult<?> exceptionHandler(Exception e) {
         logger.error(e.getMessage(), e);
         return CommonResult.ofFail(ResultCodeEnum.SYSTEM_EXCEPTION);
     }

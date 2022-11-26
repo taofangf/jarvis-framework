@@ -48,17 +48,17 @@ public class AuthenticationFilter implements Filter {
     /**
      * 白名单url数组
      */
-    private String[] ignoreUrlPatternArray;
+    private final String[] ignoreUrlPatternArray;
 
     /**
      * 认证配置参数
      */
-    private AuthenticationProperties authenticationProperties;
+    private final AuthenticationProperties authenticationProperties;
 
     /**
      * 路径匹配器
      */
-    private PathMatcher pathMatcher = new AntPathMatcher();
+    private final PathMatcher pathMatcher = new AntPathMatcher();
 
     /**
      * AppId对应SecretKey缓存

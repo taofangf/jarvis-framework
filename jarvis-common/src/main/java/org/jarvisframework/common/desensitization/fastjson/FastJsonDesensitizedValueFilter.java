@@ -38,17 +38,19 @@ public class FastJsonDesensitizedValueFilter implements ContextValueFilter {
 
     @Override
     public Object process(BeanContext context, Object object, String name, Object value) {
-        Desensitization desensitization = context.getAnnation(Desensitization.class);
-        if (Objects.nonNull(desensitization)) {
-            if (desensitization.desensitizedUsing() != DesensitizedCustomizer.DefaultDesensitized.class) {
-                try {
-                    DesensitizedCustomizer desensitizedCustomizer = desensitization.desensitizedUsing().newInstance();
-                    return desensitizedCustomizer.desensitized(value);
-                } catch (Exception e) {
-                    logger.error("DesensitizedCustomizer initialize exception", e);
+        if (Objects.nonNull(context)) {
+            Desensitization desensitization = context.getAnnation(Desensitization.class);
+            if (Objects.nonNull(desensitization)) {
+                if (desensitization.desensitizedUsing() != DesensitizedCustomizer.DefaultDesensitized.class) {
+                    try {
+                        DesensitizedCustomizer desensitizedCustomizer = desensitization.desensitizedUsing().newInstance();
+                        return desensitizedCustomizer.desensitized(value);
+                    } catch (Exception e) {
+                        logger.error("DesensitizedCustomizer initialize exception", e);
+                    }
                 }
+                return DesensitizedUtil.desensitized((CharSequence) value, desensitization.value());
             }
-            return DesensitizedUtil.desensitized((CharSequence) value, desensitization.value());
         }
         return value;
     }

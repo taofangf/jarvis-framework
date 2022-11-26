@@ -86,7 +86,7 @@ public class CommonResult<T> {
      *
      * @return 无响应体的成功响应
      */
-    public static CommonResult ofSuccess() {
+    public static CommonResult<?> ofSuccess() {
         return ofSuccess(null);
     }
 
@@ -98,7 +98,7 @@ public class CommonResult<T> {
      * @return 响应成功
      */
     public static <T> CommonResult<T> ofSuccess(T data) {
-        return new CommonResult(ResultCodeEnum.PUB_SUCCESS, data, true);
+        return new CommonResult<>(ResultCodeEnum.PUB_SUCCESS, data, true);
     }
 
     /**
@@ -110,7 +110,7 @@ public class CommonResult<T> {
      * @return 响应成功
      */
     public static <T> CommonResult<T> ofSuccess(Result result, T data) {
-        return new CommonResult(result, data, true);
+        return new CommonResult<>(result, data, true);
     }
 
     /**
@@ -123,7 +123,7 @@ public class CommonResult<T> {
      * @return 指定返回码、返回信息的成功响应
      */
     public static <T> CommonResult<T> ofSuccess(String resultCode, String resultInfo, T data) {
-        return new CommonResult(resultCode, resultInfo, data, true);
+        return new CommonResult<>(resultCode, resultInfo, data, true);
     }
 
     /**
@@ -131,7 +131,7 @@ public class CommonResult<T> {
      *
      * @return 无响应体的失败响应
      */
-    public static CommonResult ofFail() {
+    public static CommonResult<?> ofFail() {
         return ofFail(null);
     }
 
@@ -143,7 +143,7 @@ public class CommonResult<T> {
      * @return 响应失败
      */
     public static <T> CommonResult<T> ofFail(T data) {
-        return new CommonResult(ResultCodeEnum.PUB_ERROR, data, false);
+        return new CommonResult<>(ResultCodeEnum.PUB_ERROR, data, false);
     }
 
     /**
@@ -155,7 +155,7 @@ public class CommonResult<T> {
      * @return 响应失败
      */
     public static <T> CommonResult<T> ofFail(Result result, T data) {
-        return new CommonResult(result, data, false);
+        return new CommonResult<>(result, data, false);
     }
 
     /**
@@ -164,8 +164,8 @@ public class CommonResult<T> {
      * @param result {@link Result}
      * @return {@link CommonResult}
      */
-    public static CommonResult ofFail(Result result) {
-        return new CommonResult(result.getResultCode(), result.getResultInfo(), null, false);
+    public static CommonResult<?> ofFail(Result result) {
+        return new CommonResult<>(result.getResultCode(), result.getResultInfo(), null, false);
     }
 
     /**
@@ -178,7 +178,7 @@ public class CommonResult<T> {
      * @return 指定返回码、返回信息的失败响应
      */
     public static <T> CommonResult<T> ofFail(String resultCode, String resultInfo, T data) {
-        return new CommonResult(resultCode, resultInfo, data, false);
+        return new CommonResult<>(resultCode, resultInfo, data, false);
     }
 
     /**
@@ -189,7 +189,7 @@ public class CommonResult<T> {
      * @return 异常信息返回
      */
     public static <T extends BaseException> CommonResult<T> ofException(T data) {
-        return new CommonResult(data.getResultCode(), data.getResultInfo(), null, false);
+        return new CommonResult<>(data.getResultCode(), data.getResultInfo(), null, false);
     }
 
     public String getResultCode() {

@@ -25,7 +25,7 @@ import java.util.StringJoiner;
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class StandardResponseResult<T> implements ResponseResult {
+public class StandardResponseResult<T> implements ResponseResult<T> {
     /**
      * 返回码
      */
@@ -94,7 +94,7 @@ public class StandardResponseResult<T> implements ResponseResult {
      * @return T
      */
     @Override
-    public Object responseBody() {
+    public T responseBody() {
         return getResult();
     }
 

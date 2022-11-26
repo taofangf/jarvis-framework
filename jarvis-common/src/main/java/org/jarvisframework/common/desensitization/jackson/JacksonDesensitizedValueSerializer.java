@@ -38,7 +38,7 @@ import java.util.Objects;
  * @author <a href="mailto:taofangf@gmail.com">fangtao</a>
  * @since 1.0.0
  */
-public class JacksonDesensitizedValueSerializer extends JsonSerializer implements ContextualSerializer {
+public class JacksonDesensitizedValueSerializer extends JsonSerializer<Object> implements ContextualSerializer {
     private static final Logger logger = LoggerFactory.getLogger(JacksonDesensitizedValueSerializer.class);
 
     /**
