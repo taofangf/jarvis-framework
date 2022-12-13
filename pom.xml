@@ -20,89 +20,53 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>apache</artifactId>
+        <groupId>org.apache</groupId>
+        <version>25</version>
+    </parent>
 
     <groupId>org.jarvis</groupId>
     <artifactId>jarvis-framework</artifactId>
     <version>${revision}</version>
+    <packaging>pom</packaging>
+
     <modules>
         <module>jarvis-common</module>
         <module>jarvis-common-web</module>
         <module>jarvis-swagger</module>
         <module>jarvis-distributed-lock</module>
         <module>jarvis-security</module>
+        <module>jarvis-dependencies-bom</module>
+        <module>jarvis-framework-bom</module>
+        <module>jarvis-parent</module>
     </modules>
-
-    <packaging>pom</packaging>
 
     <properties>
         <revision>1.0-SNAPSHOT</revision>
-        <fastjson.version>1.2.83</fastjson.version>
-        <hutool.version>5.8.8</hutool.version>
-        <springfox.version>3.0.0</springfox.version>
-        <knife4j.version>3.0.3</knife4j.version>
-        <spring.boot.version>2.6.7</spring.boot.version>
-        <curator.version>4.2.0</curator.version>
-        <zookeeper.version>3.4.14</zookeeper.version>
-        <bouncycastle.version>1.69</bouncycastle.version>
 
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <file.encoding>UTF-8</file.encoding>
 
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.flatten.version>1.2.5</maven.flatten.version>
-        <maven.source.version>3.2.1</maven.source.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
+                <groupId>org.jarvis</groupId>
+                <artifactId>jarvis-dependencies-bom</artifactId>
+                <version>${project.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
             <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15to18</artifactId>
-                <version>${bouncycastle.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${springfox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>io.swagger</groupId>
-                        <artifactId>swagger-models</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>io.swagger</groupId>
-                        <artifactId>swagger-annotations</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
                 <groupId>org.jarvis</groupId>
-                <artifactId>jarvis-common</artifactId>
+                <artifactId>jarvis-framework-bom</artifactId>
                 <version>${project.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -112,7 +76,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
@@ -122,7 +85,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>${maven.source.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -154,6 +116,28 @@
                         <goals>
                             <goal>clean</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>1.8</version>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>3.6</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
