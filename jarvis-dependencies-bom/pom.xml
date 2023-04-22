@@ -57,7 +57,7 @@
             <dependency>
                 <groupId>org.jarvis</groupId>
                 <artifactId>jarvis-framework-bom</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

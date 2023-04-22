@@ -40,6 +40,8 @@
         <module>jarvis-dependencies-bom</module>
         <module>jarvis-framework-bom</module>
         <module>jarvis-parent</module>
+        <module>jarvis-utils</module>
+        <module>jarvis-cache</module>
     </modules>
 
     <properties>

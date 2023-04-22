@@ -42,27 +42,27 @@
             <dependency>
                 <groupId>org.jarvis</groupId>
                 <artifactId>jarvis-common</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.jarvis</groupId>
                 <artifactId>jarvis-common-web</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.jarvis</groupId>
                 <artifactId>jarvis-distributed-lock</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.jarvis</groupId>
                 <artifactId>jarvis-security</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.jarvis</groupId>
                 <artifactId>jarvis-swagger</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
